@@ -3,6 +3,7 @@ pragma solidity 0.8.18;
 
 import {DeployDSC} from "../../script/DeployDSC.s.sol";
 import {DSCEngine} from "../../src/DSCEngine.sol";
+import {DSCPool} from "../../src/DSCPool.sol";
 import {DecentralisedStableCoin} from "../../src/DecentralisedStableCoin.sol";
 import {HelperConfig} from "../../script/HelperConfig.s.sol";
 import {ERC20Mock} from "@openzeppelin/contracts/mocks/ERC20Mock.sol";
@@ -17,6 +18,7 @@ import {StdCheats} from "forge-std/StdCheats.sol";
 contract DSCEngineTest is StdCheats, Test {
     DecentralisedStableCoin dsc;
     DSCEngine engine;
+    DSCPool pool;
     HelperConfig config;
 
     address ethUsdPriceFeed;
@@ -47,7 +49,7 @@ contract DSCEngineTest is StdCheats, Test {
 
     function setUp() public {
         DeployDSC deployer = new DeployDSC();
-        (dsc, engine, config) = deployer.run();
+        (dsc, engine, pool, config) = deployer.run();
         (ethUsdPriceFeed, btcUsdPriceFeed, weth, wbtc, deployerKey) = config.activeNetworkConfig();
         ERC20Mock(weth).mint(USER, STARTING_ERC20_BALANCE);
     }
@@ -65,7 +67,7 @@ contract DSCEngineTest is StdCheats, Test {
         priceFeedAddresses.push(btcUsdPriceFeed);
 
         vm.expectRevert(DSCEngine.DSCEngine__TokenAddressesAndPriceFeedAddressesMustBeSameLength.selector);
-        new DSCEngine(tokenAddresses, priceFeedAddresses, address(dsc));
+        new DSCEngine(tokenAddresses, priceFeedAddresses, address(dsc), address(pool));
     }
 
     ////////////////
@@ -104,7 +106,7 @@ contract DSCEngineTest is StdCheats, Test {
         priceFeedAddresses = [ethUsdPriceFeed];
 
         vm.prank(owner);
-        DSCEngine mockEngine = new DSCEngine(tokenAddresses, priceFeedAddresses, address(mockDsc));
+        DSCEngine mockEngine = new DSCEngine(tokenAddresses, priceFeedAddresses, address(mockDsc), address(pool));
 
         mockDsc.mint(USER, AMOUNT_COLLATERAL);
 
@@ -179,7 +181,7 @@ contract DSCEngineTest is StdCheats, Test {
         priceFeedAddresses = [ethUsdPriceFeed];
         address owner = msg.sender;
         vm.prank(owner);
-        DSCEngine mockEngine = new DSCEngine(tokenAddresses, priceFeedAddresses, address(mockDsc));
+        DSCEngine mockEngine = new DSCEngine(tokenAddresses, priceFeedAddresses, address(mockDsc), address(pool));
         mockDsc.transferOwnership(address(mockEngine));
 
         // Arrange - User
@@ -305,7 +307,7 @@ contract DSCEngineTest is StdCheats, Test {
         priceFeedAddresses = [ethUsdPriceFeed];
 
         vm.prank(owner);
-        DSCEngine mockEngine = new DSCEngine(tokenAddresses, priceFeedAddresses, address(mockDsc));
+        DSCEngine mockEngine = new DSCEngine(tokenAddresses, priceFeedAddresses, address(mockDsc), address(pool));
         mockDsc.mint(USER, AMOUNT_COLLATERAL);
 
         vm.prank(owner);
@@ -403,7 +405,7 @@ contract DSCEngineTest is StdCheats, Test {
         priceFeedAddresses = [ethUsdPriceFeed];
         address owner = msg.sender;
         vm.prank(owner);
-        DSCEngine mockEngine = new DSCEngine(tokenAddresses, priceFeedAddresses, address(mockDsc));
+        DSCEngine mockEngine = new DSCEngine(tokenAddresses, priceFeedAddresses, address(mockDsc), address(pool));
         mockDsc.transferOwnership(address(mockEngine));
 
         // Arrange - User

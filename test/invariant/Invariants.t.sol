@@ -28,7 +28,7 @@ contract InvariantsTest is StdInvariant, Test {
 
     function setUp() external {
         DeployDSC deployer = new DeployDSC();
-        (dsc, engine, helperConfig) = deployer.run();
+        (dsc, engine, ,helperConfig) = deployer.run();
         (ethUsdPriceFeed, btcUsdPriceFeed, weth, wbtc, deployerKey) = helperConfig.activeNetworkConfig();
         // targetContract(address(engine));
         handler = new Handler(engine, dsc);

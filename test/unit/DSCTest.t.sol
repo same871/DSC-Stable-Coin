@@ -12,7 +12,7 @@ contract DSCTest is Test {
 
     function setUp() public {
         DeployDSC deployer = new DeployDSC();
-        (dsc, engine,) = deployer.run();
+        (dsc, engine,,) = deployer.run();
     }
 
     function testRevertsIfAmountToMintIsLessThanOrEqualToZero() public {
