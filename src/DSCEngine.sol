@@ -214,9 +214,9 @@ contract DSCEngine is ReentrancyGuard {
         }
         uint256 tokenAmountFromDebtCovered = getTokenAmountFromUsd(collateral, debtToCover);
         uint256 bonusCollateral = (tokenAmountFromDebtCovered * LIQUIDATION_BONUS) / LIQUIDATION_PRECISION;
-        uint256 totalCollateralToRedeem = tokenAmountFromDebtCovered + bonusCollateral;
+        uint256 totalCollateralToRedeem = tokenAmountFromDebtCovered + bonusCollateral; 
         _redeemCollateral(user, msg.sender, collateral, totalCollateralToRedeem);
-        _sentAmountLeftToDscPool(user, i_poolAddress);
+        _sentAmountLeftToDscPool(user, collateral);
         _burnDsc(user, msg.sender, debtToCover);
 
         uint256 endingUserHealthFactor = _healthFactor(user);

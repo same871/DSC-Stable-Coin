@@ -3,6 +3,11 @@ pragma solidity 0.8.18;
 
 import {IERC20} from "@openzeppelin/contracts/token/ERC20/IERC20.sol";
 
+/**
+ * @title DSC Pool
+ * @author Samuel Muto
+ * @notice This contract collects remaining funds from a liquidated user.
+ */
 contract DSCPool {
     ///////////
     // Error //
@@ -46,14 +51,14 @@ contract DSCPool {
         i_owner = msg.sender;
     }
 
-    receive() external payable {
-        emit Received(msg.sender, msg.value);
-    }
-
     function withdraw(address collateral, uint256 amount) external onlyOwner poolHasBalance(amount) {
         bool success = IERC20(collateral).transfer(msg.sender, amount);
         if (!success) {
             revert DSCPool__TransferFailed();
         }
+    }
+
+    function getBalance(address collateral) external view returns (uint256) {
+        return IERC20(collateral).balanceOf(address(this));
     }
 }

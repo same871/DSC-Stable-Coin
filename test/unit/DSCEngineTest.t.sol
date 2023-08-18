@@ -483,13 +483,21 @@ contract DSCEngineTest is StdCheats, Test {
         assertEq(liquidatorWethBalance, expectedWeth);
     }
 
-    function testUserHasSomeEthAfterLiquidation() public liquidated {
+    function testDscPoolReceiveCollateral() public liquidated {
+        uint256 dscPoolFunds = pool.getBalance(weth);
+        assert(dscPoolFunds > 0);
+    }
+
+    function testUserHasNoEthAfterLiquidation() public liquidated {
         uint256 amountLiquidated = engine.getTokenAmountFromUsd(weth, amountToMint)
             + (engine.getTokenAmountFromUsd(weth, amountToMint) / engine.getLiquidationBonus());
         uint256 usdAmountLiquidated = engine.getUsdValue(weth, amountLiquidated);
-        uint256 expectedUserCollateralValue = engine.getUsdValue(weth, AMOUNT_COLLATERAL) - usdAmountLiquidated;
+        uint256 amountReceiveByPool = pool.getBalance(weth);
+        uint256 balanceInUsd = engine.getUsdValue(weth, amountReceiveByPool);
+        uint256 expectedUserCollateralValue =
+            engine.getUsdValue(weth, AMOUNT_COLLATERAL) - (usdAmountLiquidated + balanceInUsd);
         (, uint256 userCollateralValueInUsd) = engine.getAccountInformation(USER);
-        uint256 hardCodedExpectedValue = 70000000000000000020;
+        uint256 hardCodedExpectedValue = 0;
         assertEq(userCollateralValueInUsd, expectedUserCollateralValue);
         assertEq(userCollateralValueInUsd, hardCodedExpectedValue);
     }
@@ -504,5 +512,3 @@ contract DSCEngineTest is StdCheats, Test {
         assertEq(userDscMinted, 0);
     }
 }
-//16111111111111111110
-// 6111111111111111110
