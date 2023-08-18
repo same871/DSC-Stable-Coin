@@ -1,5 +1,9 @@
 # Foundry DeFi Stablecoin
 
+First things first, Huge shout-out to [Patrick Collins](https://twitter.com/PatrickAlphaC) for his amazing course which helped me build this project. You can find the course [here](https://youtube.com/) on YouTube.
+
+Here is [Patrick Collins](https://www.youtube.com/channel/UCn-3f8tw_E1jZvhuHatROwA) YouTube channel. Check it out its amazing.
+
 # About
 
 This project is meant to be a stablecoin where users can deposit WETH and WBTC in exchange for a token that will be pegged to the USD.
@@ -146,4 +150,4 @@ forge fmt
 
 # Thank You!
 
-[![Samuel Muto Twitter](https://img.shields.io/badge/Twitter-1DA1F2?style=for-the-badge&logo=twitter&logoColor=white)](https://twitter.com/muto_takudzwa)
+[Samuel Muto Twitter](https://twitter.com/muto_takudzwa)
