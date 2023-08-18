@@ -4,7 +4,7 @@ First things first, Huge shout-out to [Patrick Collins](https://twitter.com/Patr
 
 Here is [Patrick Collins](https://www.youtube.com/channel/UCn-3f8tw_E1jZvhuHatROwA) YouTube channel. Check it out its amazing.
 
-# About
+## About
 
 This project is meant to be a stablecoin where users can deposit WETH and WBTC in exchange for a token that will be pegged to the USD.
 
@@ -24,16 +24,16 @@ This project is meant to be a stablecoin where users can deposit WETH and WBTC i
 - [Formatting](#formatting)
 - [Thank you!](#thank-you)
 
-# Getting Started
+## Getting Started
 
-## Requirements
+### Requirements
 
 - [git](https://git-scm.com/book/en/v2/Getting-Started-Installing-Git)
   - You'll know you did it right if you can run `git --version` and you see a response like `git version x.x.x`
 - [foundry](https://getfoundry.sh/)
   - You'll know you did it right if you can run `forge --version` and you see a response like `forge 0.2.0 (816e00b 2023-03-16T00:05:26.396218Z)`
 
-## Quickstart
+### Quickstart
 
 ```bash
 git clone https://github.com/same871/DSC-Stable-Coin
@@ -41,15 +41,15 @@ cd DSC-Stable-Coin
 forge build
 ```
 
-# Usage
+## Usage
 
-## Start a local node
+### Start a local node
 
 ```bash
 make anvil
 ```
 
-## Deploy
+### Deploy
 
 This will default to your local node. You need to have it running in another terminal in order for it to deploy.
 
@@ -57,7 +57,7 @@ This will default to your local node. You need to have it running in another ter
 make deploy
 ```
 
-## Testing
+### Testing
 
 - Unit
 - Integration
@@ -72,7 +72,7 @@ forge test
 
 - [Deploy - Other Network](#deployment-to-testnet-or-mainnet)
 
-### Test coverage
+#### Test coverage
 
 ```bash
 forge coverage
@@ -84,7 +84,7 @@ and for coverage based testing:
 forge coverage --report debug
 ```
 
-# Deployment to testnet or mainnet
+## Deployment to testnet or mainnet
 
 1. Setup environment variables
 
@@ -106,7 +106,7 @@ Head over to [faucets.chain.link](https://faucets.chain.link/) and get some tesn
 make deploy ARGS="--network sepolia"
 ```
 
-## Scripts
+### Scripts
 
 Instead of scripts, we can direclty use the `cast` command to interact with the contract
 
@@ -130,7 +130,7 @@ cast send 0xdd13E55209Fd76AfE204dBda4007C227904f0a81 "approve(address,uint256)" 
 cast send 0x091EA0838eBD5b7ddA2F2A641B068d6D59639b98 "depositCollateralAndMintDsc(address,uint256,uint256)" 0xdd13E55209Fd76AfE204dBda4007C227904f0a81 100000000000000000 10000000000000000 --rpc-url $SEPOLIA_RPC_URL --private-key $PRIVATE_KEY
 ```
 
-## Estimate gas
+### Estimate gas
 
 You can estimate how much gas things cost by running:
 
@@ -140,7 +140,7 @@ forge snapshot
 
 And you'll see and output file called `.gas-snapshot`
 
-# Formatting
+## Formatting
 
 To run code formatting:
 
@@ -148,6 +148,6 @@ To run code formatting:
 forge fmt
 ```
 
-# Thank You!
+## Thank You!
 
 [Samuel Muto Twitter](https://twitter.com/muto_takudzwa)
